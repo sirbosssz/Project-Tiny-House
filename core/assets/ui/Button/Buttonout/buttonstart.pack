@@ -1,0 +1,19 @@
+
+buttonstart.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: xy
+yellow_button04
+  rotate: false
+  xy: 1, 1
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+yellow_button05
+  rotate: false
+  xy: 193, 5
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1

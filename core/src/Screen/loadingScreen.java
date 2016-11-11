@@ -7,6 +7,7 @@ import Manager.GameScreenManager.STATE;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.game.PetGame;
 import Character.InitAll;
 
@@ -51,6 +52,7 @@ public class loadingScreen extends AbstractScreen{
 		game.batch.end();
 		
 		if(AssetMan.loadAsset()){
+			stage.addAction(Actions.fadeOut(1));
 			game.gsm.setScreen(STATE.MAIN_MENU);
 		}
 			
