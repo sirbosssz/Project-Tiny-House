@@ -1,6 +1,9 @@
 package Manager;
 
 import java.util.HashMap;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.game.PetGame;
 import Screen.AbstractScreen;
 import Screen.MainGameScreen;

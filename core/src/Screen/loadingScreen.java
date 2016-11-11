@@ -1,5 +1,7 @@
 package Screen;
 
+import javax.swing.Action;
+
 import com.badlogic.gdx.Gdx;
 import Manager.AssetMan;
 import Manager.GameScreenManager.STATE;
@@ -20,7 +22,6 @@ public class loadingScreen extends AbstractScreen{
 	
 	InitAll createLoad = new InitAll();
 	private OrthographicCamera camera;
-	
 
 	public loadingScreen(PetGame game) {
 		super(game);
@@ -29,7 +30,6 @@ public class loadingScreen extends AbstractScreen{
 	
 	@Override
 	public void show() {
-		
 		createLoad.createLoading();
 		img = new Texture(Gdx.files.internal("picture/Background/Loading Screen.png"));
 		this.camera = new OrthographicCamera();
@@ -45,23 +45,26 @@ public class loadingScreen extends AbstractScreen{
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 		game.batch.draw(img, 0, 0);
-		game.batch.draw(createLoad.loading[0].getKeyFrame(stateTime), 95, 320,90, 90);
+		game.batch.draw(createLoad.loading[0].getKeyFrame(stateTime), 95, 320, 90, 90);
 		stateTime += delta;
 		i++;
 		if(i > 72){i = 0;}
 		game.batch.end();
 		
 		if(AssetMan.loadAsset()){
-			stage.addAction(Actions.fadeOut(1));
+			/*stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable(){
+				@Override
+				public void run() {
+					game.gsm.setScreen(STATE.MAIN_MENU);
+				}
+				
+			})));*/
 			game.gsm.setScreen(STATE.MAIN_MENU);
-		}
 			
-		
-		
-	}
-
+		}
+	}	
 	
-
+	
 	@Override
 	public void pause() {}
 

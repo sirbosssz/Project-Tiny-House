@@ -59,28 +59,22 @@ public class NewMainMenuScreen extends AbstractScreen{
 	
 	InitAll mainMenuSprite = new InitAll();
 	
-	
 	public NewMainMenuScreen(PetGame game) {
 		super(game);
 		
 		
 		this.camera = new OrthographicCamera();//stage cam label
-		this.camera.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
-		
 		this.camera2 = new OrthographicCamera();//background cam
-		this.camera2.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
-		
 		this.camera3 = new OrthographicCamera();//stage2 cam settingbutton
-		this.camera3.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
-		
 		this.camera4 = new OrthographicCamera();//stage3 cam settingpopup
-		this.camera4.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
-		
 		this.camera5 = new OrthographicCamera();//stage3 cam settingpopup
+		
+		this.camera.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
+		this.camera2.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
+		this.camera3.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
+		this.camera4.setToOrtho(false, PetGame.WIDTH*4, PetGame.HEIGHT*4);
 		this.camera5.setToOrtho(false, PetGame.WIDTH, PetGame.HEIGHT);
-		
-		
-		
+
 		game.batch.setProjectionMatrix(camera2.combined);
 		this.shape = new ShapeRenderer();
 		
@@ -90,8 +84,7 @@ public class NewMainMenuScreen extends AbstractScreen{
 		stage3 = new Stage(new FitViewport(PetGame.WIDTH, PetGame.HEIGHT, camera4));
 		stage4 = new Stage(new FitViewport(PetGame.WIDTH, PetGame.HEIGHT, camera3));
 		stage5 = new Stage(new FitViewport(PetGame.WIDTH, PetGame.HEIGHT, camera3));
-		
-		
+			
 	}
 
 	@Override
@@ -106,11 +99,8 @@ public class NewMainMenuScreen extends AbstractScreen{
 		mainMenuSprite.createMainmenuSprite();
 		
 		img = AssetMan.manager.get(AssetMan.graphic);
-		
 		img4 = AssetMan.manager.get(AssetMan.graphic1);
-		
 		img2 = AssetMan.manager.get(AssetMan.graphic2);
-		
 		img5 = new Texture(Gdx.files.internal("picture/Background/mid_cir.png"));
 		
 		image = new Image(img2);
@@ -120,8 +110,6 @@ public class NewMainMenuScreen extends AbstractScreen{
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/font/kenvector_future.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		BitmapFont font = generator.generateFont(parameter);
-		
-		
 		
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/pre_ui.pack"));
 		startGameAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/fianl2.pack"));
@@ -172,23 +160,23 @@ public class NewMainMenuScreen extends AbstractScreen{
 		
 		table5 = new Table(startGameSkin);
 		
-		table.add(gameLogo).width(500).height(100);
-		table.setPosition(250, PetGame.HEIGHT-50);
+		table.add(gameLogo).width(500).height(148);
+		table.setPosition(1010, PetGame.HEIGHT-100);
 		//table.setexitBut(true);
 		
-		table2.add(Setting).width(80).height(80);//button
-		table2.setPosition(1060, 520);
+		/*table2.add(Setting).width(80).height(80);//button
+		table2.setPosition(1060, 520);*/
 		//table2.setexitBut(true);
 		
 		/*table3.add(settingPop).width(440).height(512);
 		table3.setPosition(1000, -500);
 		table3.setVisible(false);*/
 		
-		table4.add(exitBut).width(80).height(80);
-		table4.setPosition(1060, 200);
+		table4.add(exitBut).width(40).height(40);
+		table4.setPosition(980, 60);
 		
 		table5.add(Startgame).width(200).height(200);
-		table5.setPosition(860, 350);
+		table5.setPosition(1100, 150);
 		
 		//stage2.addActor(table);
 		stage.getCamera();
@@ -213,6 +201,11 @@ public class NewMainMenuScreen extends AbstractScreen{
 		stage5.addActor(table5);
 		//stage5.setexitButAll(true);
 		
+		stage.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.5f)));
+		stage2.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.5f)));
+		stage3.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.5f)));
+		stage4.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.5f)));
+		stage5.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.5f)));
 		
 	}
 	
@@ -275,11 +268,9 @@ public class NewMainMenuScreen extends AbstractScreen{
 		game.batch.begin();
 		
 		game.batch.draw(mainMenuSprite.Mainmenu[spriteCount1][spriteCount2].getKeyFrame(stateTime),0,0, 1280, 720);
-		
 		game.batch.draw(img5,cPosx+1300,  cPosy+450);
 		
 		game.batch.end();
-		
 		
 		stage.act(delta);
 		stage.draw();
@@ -306,34 +297,24 @@ public class NewMainMenuScreen extends AbstractScreen{
 			createChar.stateKeep = 0;
 			createChar.stateCheck = 0;
 			game.gsm.setScreen(STATE.CHARCREATE);
+			
 		}
 		
 		if(Setting.isPressed()&&keepState==0){
-			
 			keepState = 1;
 			pressState = 1;
 		}
 		
 }
-		
+	
+	@Override
+	public void pause() {}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resume() {}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void hide() {}
 
 	
 }

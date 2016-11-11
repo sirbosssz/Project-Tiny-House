@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Action"/>
+<fullyQualifiedTypeName name="javax.swing.Action"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Stage"/>
+<fullyQualifiedTypeName name="Screen.AbstractScreen"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.actions.Actions"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
 </qualifiedTypeNameHistroy>

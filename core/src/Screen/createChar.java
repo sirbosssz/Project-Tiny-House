@@ -191,9 +191,7 @@ public class createChar extends AbstractScreen{
         
         stage.getCamera();
         stage2.getCamera();
-        
-		
-		
+
 	}
 	@Override
 	public void render(float delta){
