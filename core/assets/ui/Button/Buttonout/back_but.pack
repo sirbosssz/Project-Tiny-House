@@ -1,0 +1,19 @@
+
+back_but.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Activate Back Button
+  rotate: false
+  xy: 1, 1
+  size: 272, 272
+  orig: 272, 272
+  offset: 0, 0
+  index: -1
+all purpose back button
+  rotate: false
+  xy: 275, 1
+  size: 272, 272
+  orig: 272, 272
+  offset: 0, 0
+  index: -1

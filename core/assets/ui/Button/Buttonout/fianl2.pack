@@ -1,0 +1,24 @@
+
+fianl2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PlayButtonA
+  rotate: false
+  xy: 1, 1
+  size: 2139, 2110
+  orig: 2139, 2110
+  offset: 0, 0
+  index: -1
+
+fianl22.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PlayButtonB
+  rotate: false
+  xy: 1, 1
+  size: 2139, 2047
+  orig: 2139, 2047
+  offset: 0, 0
+  index: -1
