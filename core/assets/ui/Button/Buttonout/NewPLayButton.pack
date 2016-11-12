@@ -1,0 +1,19 @@
+
+NewPLayButton.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+NewPlayButtonA
+  rotate: false
+  xy: 1, 1
+  size: 216, 216
+  orig: 216, 216
+  offset: 0, 0
+  index: -1
+NewPlayButtonB
+  rotate: false
+  xy: 219, 1
+  size: 216, 216
+  orig: 216, 216
+  offset: 0, 0
+  index: -1

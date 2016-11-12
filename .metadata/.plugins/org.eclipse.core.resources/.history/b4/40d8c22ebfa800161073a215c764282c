@@ -1,0 +1,8 @@
+package Manager;
+
+import com.badlogic.gdx.utils.Json.Serializable;
+
+public class GameData implements Serializable{
+	
+	private static final long SerialID = 1;
+}

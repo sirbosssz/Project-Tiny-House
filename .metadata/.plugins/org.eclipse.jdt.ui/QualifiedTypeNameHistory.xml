@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Action"/>
+<fullyQualifiedTypeName name="javax.swing.Action"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Stage"/>
+<fullyQualifiedTypeName name="Screen.AbstractScreen"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.actions.Actions"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="Manager.Save"/>
+</qualifiedTypeNameHistroy>
