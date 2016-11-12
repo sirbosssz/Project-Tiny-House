@@ -295,7 +295,7 @@ public class createChar extends AbstractScreen{
 			cre_char_Back_Ta_Act.setVisible(false);
 			game.gsm.setScreen(STATE.MAIN_MENU);
 		}
-		System.out.println(stateCheck + " " + menuState + " " + createState);
+		//System.out.println(stateCheck + " " + menuState + " " + createState);
 		
 	}
 

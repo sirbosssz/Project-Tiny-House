@@ -2,9 +2,11 @@ package Character;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import Manager.AssetMan;
+import Screen.MainGameScreen;
 
 public class InitAll {
 	
@@ -12,10 +14,10 @@ public class InitAll {
 	public Animation[] right = new Animation[10];
 	public Animation[] up = new Animation[10];
 	public Animation[] down = new Animation[10];
-	public Animation[] leftup = new Animation[17];
-	public Animation[] rightup = new Animation[17];
-	public Animation[] leftdown = new Animation[17];
-	public Animation[] rightdown = new Animation[17];
+	public Sprite[] leftup = new Sprite[17];
+	public Sprite[] rightup = new Sprite[17];
+	public Sprite[] leftdown = new Sprite[17];
+	public Sprite[] rightdown = new Sprite[17];
 	public Animation[] loading = new Animation[74];
 	public Animation[][] Mainmenu = new Animation[9][10];
 	
@@ -40,16 +42,20 @@ public class InitAll {
 			TextureRegion[][] spriteSheet3= TextureRegion.split(new Texture("picture/CharSprite/cat walk front_ left.png"), char_sprite_width, char_sprite_width);
 			
 			for(int i = 0 ;i<17;i++){
-				leftdown[i] = new Animation(0,spriteSheet[0][i]);
+				leftdown[i] = new Sprite(spriteSheet[0][i]);
+				leftdown[i].setBounds(MainGameScreen.char_x, MainGameScreen.char_y, MainGameScreen.char_width, MainGameScreen.char_height);
 			}
 			for(int i = 0 ;i<17;i++){
-				rightdown[i] = new Animation(0,spriteSheet1[0][i]);
+				rightdown[i] = new Sprite(spriteSheet1[0][i]);
+				rightdown[i].setBounds(MainGameScreen.char_x, MainGameScreen.char_y, MainGameScreen.char_width, MainGameScreen.char_height);
 			}
 			for(int i = 0 ;i<17;i++){
-				rightup[i] = new Animation(0,spriteSheet2[0][i]);
+				rightup[i] = new Sprite(spriteSheet2[0][i]);
+				rightup[i].setBounds(MainGameScreen.char_x, MainGameScreen.char_y, MainGameScreen.char_width, MainGameScreen.char_height);
 			}
 			for(int i = 0 ;i<17;i++){
-				leftup[i] = new Animation(0,spriteSheet3[0][i]);
+				leftup[i] = new Sprite(spriteSheet3[0][i]);
+				leftup[i].setBounds(MainGameScreen.char_x, MainGameScreen.char_y, MainGameScreen.char_width, MainGameScreen.char_height);
 			}
 			System.out.println("Finished");
 			
