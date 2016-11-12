@@ -1,0 +1,32 @@
+package Manager;
+
+import java.io.File;
+
+public class Save {
+	
+	public static GameData game;
+	
+	public static void save(){
+		try{
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void load(){
+		
+	}
+	
+	public static boolean saveFileExists(){
+		File file = new File("game.sav");
+		return file.exists();
+	}
+	
+	public static void init(){
+		game = new GameData();
+		game.init();
+		save();
+	}
+}

@@ -1,5 +1,8 @@
 package Screen;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
@@ -27,6 +30,7 @@ import com.mygdx.game.PetGame;
 
 import Manager.AssetMan;
 import Manager.GameScreenManager.STATE;
+import Manager.Save;
 
 public class createChar extends AbstractScreen{
 
@@ -233,12 +237,17 @@ public class createChar extends AbstractScreen{
 			game.gsm.setScreen(STATE.PLAY);
 		}
 		
-		if(backbutton.isPressed()){
+		if(backbutton.isPressed() && Save.game.getCreateState() == 0){
 			
 			backTable.setVisible(false);
 			char_ta.setVisible(true);
 			createState = 1;
+			Save.game.setCreateState(1);
 			
+		}
+		else if (Save.game.getCreateState() == 1){
+			backTable.setVisible(false);
+			char_ta.setVisible(true);
 		}
 		
 		sel_But.addListener(new ClickListener(){
@@ -282,6 +291,7 @@ public class createChar extends AbstractScreen{
 				stateKeep= 0;
 				createState = 0;
 				menuState = 0;
+				Save.game.setCreateState(0);
 				
 			}
 		}

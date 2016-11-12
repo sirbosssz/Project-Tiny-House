@@ -32,6 +32,7 @@ import com.mygdx.game.PetGame;
 
 import Manager.AssetMan;
 import Manager.GameScreenManager.STATE;
+import Manager.Save;
 
 public class NewMainMenuScreen extends AbstractScreen{
 
@@ -112,7 +113,7 @@ public class NewMainMenuScreen extends AbstractScreen{
 		BitmapFont font = generator.generateFont(parameter);
 		
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/pre_ui.pack"));
-		startGameAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/fianl2.pack"));
+		startGameAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/NewPLayButton.pack"));
 		exitAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/exit.pack"));
 		
 		skin = new Skin(buttonAtlas);
@@ -130,8 +131,8 @@ public class NewMainMenuScreen extends AbstractScreen{
 		exitButtonStyle.up = exitSkin.getDrawable("button_inact");
 		exitButtonStyle.down = exitSkin.getDrawable("button_act");
 	
-		startGameStyle.up = startGameSkin.getDrawable("PlayButtonA");
-		startGameStyle.down = startGameSkin.getDrawable("PlayButtonB");
+		startGameStyle.up = startGameSkin.getDrawable("NewPlayButtonA");
+		startGameStyle.down = startGameSkin.getDrawable("NewPlayButtonB");
 		
 		buttonStyle.up = skin.getDrawable("button_inac");
         buttonStyle.down = skin.getDrawable("button_ac");
@@ -293,7 +294,8 @@ public class NewMainMenuScreen extends AbstractScreen{
 			stage4.clear();
 			stage5.clear();
 			//createChar.backTable.setVisible(false);
-			createChar.createState = 1;
+			Save.load();
+			createChar.createState = Save.game.getCreateState();
 			createChar.stateKeep = 0;
 			createChar.stateCheck = 0;
 			game.gsm.setScreen(STATE.CHARCREATE);
