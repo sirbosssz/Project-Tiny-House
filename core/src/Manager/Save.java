@@ -29,6 +29,7 @@ public class Save {
 	public static void load(){
 		try{
 			if(!saveFileExists()){
+				init();
 				return;
 			}
 			ObjectInputStream in = new ObjectInputStream(
@@ -48,4 +49,9 @@ public class Save {
 		return file.exists();
 	}
 	
+	public static void init(){
+		gamed = new GameData();
+		gamed.init();
+		save();
+	}
 }

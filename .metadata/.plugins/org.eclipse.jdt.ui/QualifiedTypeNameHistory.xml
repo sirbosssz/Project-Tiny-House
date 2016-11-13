@@ -15,5 +15,4 @@
 <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
 <fullyQualifiedTypeName name="Manager.Save"/>
-<fullyQualifiedTypeName name="Manager.GameScreenManager.STATE"/>
 </qualifiedTypeNameHistroy>

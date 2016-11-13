@@ -14,4 +14,8 @@ public class GameData implements Serializable{
 	public int getPositon(){return position;}
 	public void setPosition(int i){position = i;}
 	
+	public void init(){
+		createstate = 0;
+	}
+	
 }
