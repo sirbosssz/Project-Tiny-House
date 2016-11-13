@@ -21,6 +21,12 @@ public class AssetMan {
 	public static final String graphic3_crechar = "picture/CharSprite/Cat Walk0001.png";
 	public static final String graphic4_crechar = "picture/Background/selback.png";
 	public static final String graphic5_crechar = "picture/Background/Outline.png";
+	public static final String graphic6_crechar = "picture/CharSprite/walk_back_sprite.png";
+	public static final String graphic7_crechar = "picture/CharSprite/walk_font_sprite.png";
+	public static final String graphic8_crechar = "picture/CharSprite/walk_L_sprite.png";
+	public static final String graphic9_crechar = "picture/CharSprite/walk_R_sprite.png";
+	public static final String graphic10_crechar = "picture/CharSprite/interact_L_sprite.png";
+	public static final String graphic11_crechar = "picture/CharSprite/interact_R_sprite.png";
 	
 	static InitAll charCre = new InitAll();
 	
@@ -38,7 +44,16 @@ public class AssetMan {
 		manager.load(graphic3_crechar, Texture.class);
 		manager.load(graphic4_crechar, Texture.class);
 		manager.load(graphic5_crechar, Texture.class);
-		if(manager.getLoadedAssets() == 12){
+		manager.load(graphic6_crechar, Texture.class);
+		manager.load(graphic7_crechar, Texture.class);
+		manager.load(graphic8_crechar, Texture.class);
+		manager.load(graphic9_crechar, Texture.class);
+		manager.load(graphic10_crechar, Texture.class);
+		manager.load(graphic11_crechar, Texture.class);
+		
+		
+		if(manager.getLoadedAssets() == 18){
+			manager.finishLoading();
 			System.out.println("Finished Load");
 			return true;
 		}
