@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -50,8 +51,10 @@ import com.mygdx.game.PetGame;
 import Character.InitAll;
 import InputHandler.inputHandle;
 import Manager.GameScreenManager.STATE;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 
 public class MainGameScreen extends AbstractScreen implements Screen, ApplicationListener, InputProcessor{
+	
 	
 	private TiledMap map;
 	private IsometricTiledMapRenderer renderer;
@@ -71,7 +74,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	private LabelStyle style;
 	
 	public static float posx = 2800, posy = 500;//5000 2000
-	public static float char_x= 2500, char_y = 200;//4000 1000
+	public static float char_x= 2500, char_y = 200;//2500 200
 	
 	public static final int char_width = 700;
 	public static final int char_height = 700;
@@ -95,7 +98,10 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	private Input rectangle;
 	private Label tinyLabel2;
 	private ShapeRenderer sr;
-	private float[] vertice = {1794, 227, 1925, 160, 2183, 300, 2063, 399};
+	//private float[] vertice = {1306, 7,2378, -919, 4131, 296, 2708 , 959};
+	private float[] vertice = {1523, 118, 2065, -330, 4283, 7701, 2945, 1439};
+	
+	
 	
 	
 	public MainGameScreen(final PetGame game){
@@ -114,6 +120,9 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 
 	@Override
 	public void show() {
+		
+		//debugRenderer = new PolygonRegionDebugRenderer();
+		
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(this);
 		multiplexer.addProcessor(stage);
@@ -170,8 +179,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		renderer.setView((OrthographicCamera) stage.getCamera());
 		camera = new OrthographicCamera();
 		camera2 = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth()*5, Gdx.graphics.getHeight()*5);
-		camera2.setToOrtho(false, Gdx.graphics.getWidth()*5, Gdx.graphics.getHeight()*5);
+		camera.setToOrtho(false, Gdx.graphics.getWidth()*2.5f, Gdx.graphics.getHeight()*2.5f);
+		camera2.setToOrtho(false, Gdx.graphics.getWidth()*2.5f, Gdx.graphics.getHeight()*2.5f);
 		sr = new ShapeRenderer();
 		charCre.createChar();
 		
@@ -416,17 +425,19 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		for (PolygonMapObject rectangleObject : rectangleObjects){
 			Polygon polygon =  rectangleObject.getPolygon();
 			//Rectangle rectangle = rectangleObject.getRectangle();
-			//polygon.setPosition(1830, 875);
+			//polygon.setPosition(1523, 118);
+			polygon.setOrigin(1523, 118);
 			polygon.setVertices(vertice);
 			polygon.getBoundingRectangle();
 			
-			System.out.println(objects.getCount()+"  in" + " " + polygon.getX() + " " + polygon.getY()+" "+charCre.rightup[keepState].getBoundingRectangle()+ " " + char_x + " " + char_y);
+			
+			System.out.println(polygon.getX() + " " + polygon.getY()+" "+charCre.rightup[keepState].getBoundingRectangle()+ " " + char_x + " " + char_y);
 			/*if (charCre.leftup[keepState].getBoundingRectangle().overlaps(polygon)); {
 				System.out.println("Collide");
 				return true;
 			}	
 			return false;*/
-			if(Intersector.intersectLinePolygon(new Vector2(char_x, char_y), new Vector2(char_x, char_y+700), polygon)){
+			if(Intersector.intersectLinePolygon(new Vector2(char_x, char_y), new Vector2(char_x, char_y), polygon)){
 				return true;
 			}
 			return false;
