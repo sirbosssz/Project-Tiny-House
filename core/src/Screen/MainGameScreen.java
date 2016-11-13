@@ -52,10 +52,9 @@ import Character.InitAll;
 import InputHandler.inputHandle;
 import Manager.GameScreenManager.STATE;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import Manager.Save;
 
 public class MainGameScreen extends AbstractScreen implements Screen, ApplicationListener, InputProcessor{
-	
-	
 	private TiledMap map;
 	private IsometricTiledMapRenderer renderer;
 	private OrthographicCamera camera, camera2;
@@ -74,7 +73,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	private LabelStyle style;
 	
 	public static float posx = 2800, posy = 500;//5000 2000
-	public static float char_x= 2500, char_y = 200;//2500 200
+	public float char_x= 2500, char_y = 200;//2500 200
 	
 	public static final int char_width = 700;
 	public static final int char_height = 700;
@@ -166,7 +165,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
         table2.add(tinyLabel);
         table2.row();
         table2.add(tinyLabel2);
-       table2.setVisible(false);
+        table2.setVisible(false);
         
         
         stage.addActor(table);
@@ -193,6 +192,10 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	public void render(float delta) {
 		System.gc();
 		
+		Save.load();
+		char_x = Save.gamed.getPositionX();
+		char_y =  Save.gamed.getPositionY();
+		
 		if(backbutton.isPressed()){
 			/*createChar.menuState = 1;
 			createChar.createState = 1;
@@ -201,6 +204,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			createChar.cre_char_Back_Ta_Act.setVisible(true);
 			createChar.backTable.setVisible(false);*/
 			game.gsm.setScreen(STATE.MAIN_MENU);
+			Save.gamed.setPosition(char_x, char_y);
+			Save.save();
 			
 		}
 		

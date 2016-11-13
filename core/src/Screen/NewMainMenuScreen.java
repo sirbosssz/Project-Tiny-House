@@ -285,6 +285,7 @@ public class NewMainMenuScreen extends AbstractScreen{
 		stage5.draw();
 		
 		if(exitBut.isPressed()){
+			Save.save();
 			Gdx.app.exit();
 		}
 		if(Startgame.isPressed()&&pressState==0){

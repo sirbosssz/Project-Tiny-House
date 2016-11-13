@@ -7,15 +7,23 @@ public class GameData implements Serializable{
 	private static final long serialVersionUID = 1;
 	
 	public int createstate;
-	public int position;
+	public float position_x = 2500, position_y = 200;
 	
 	public int getCreateState(){return createstate;}
+	public float getPositionX(){return position_x;}
+	public float getPositionY(){return position_y;}
+	
 	public void setCreateState(int i){createstate = i;}
-	public int getPositon(){return position;}
-	public void setPosition(int i){position = i;}
+	
+	public void setPosition(float j , float k){
+		position_x = j;
+		position_y = k;
+	}
 	
 	public void init(){
 		createstate = 0;
-	}
+		position_x = 2500;
+		position_y = 200;
 	
+	}
 }
