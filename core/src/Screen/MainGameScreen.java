@@ -5,6 +5,7 @@ import java.lang.reflect.Parameter;
 import com.badlogic.gdx.ApplicationListener;
 import Screen.createChar;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -14,26 +15,46 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
 import com.mygdx.game.PetGame;
 import Character.InitAll;
 import InputHandler.inputHandle;
 import Manager.GameScreenManager.STATE;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 
 public class MainGameScreen extends AbstractScreen implements Screen, ApplicationListener, InputProcessor{
+	
 	
 	private TiledMap map;
 	private IsometricTiledMapRenderer renderer;
@@ -46,13 +67,17 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	private FreeTypeFontGenerator generator;
 	private BitmapFont font;
 	private Table table;
+	private Table table2;
 	private TextButton backbutton;
+	private Rectangle rectbound;
+	private Label tinyLabel;
+	private LabelStyle style;
 	
-	public static float posx = 5000/*Gdx.graphics.getWidth()/4*/, posy = 2000/*Gdx.graphics.getHeight()/4*/;
-	public static float char_x=4000, char_y=1000;
+	public static float posx = 2800, posy = 500;//5000 2000
+	public static float char_x= 2500, char_y = 200;//2500 200
 	
-	public static final int char_width = 900;
-	public static final int char_height = 900;
+	public static final int char_width = 700;
+	public static final int char_height = 700;
 	public static final float switch_time = 0.02f;
 	
 	int keepState, checkState = 0, camState= 0;
@@ -65,6 +90,19 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	Sprite sprite;
 	
 	InitAll charCre = new InitAll();
+	private MapLayer collisionObjectLayer;
+	private MapObjects objects;
+	private MapObjects mapObjects;
+	private Object rectangleObjects;
+	private RectangleMapObject rectangleObject;
+	private Input rectangle;
+	private Label tinyLabel2;
+	private ShapeRenderer sr;
+	//private float[] vertice = {1306, 7,2378, -919, 4131, 296, 2708 , 959};
+	private float[] vertice = {1523, 118, 2065, -330, 4283, 7701, 2945, 1439};
+	
+	
+	
 	
 	public MainGameScreen(final PetGame game){
 		
@@ -83,20 +121,31 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	@Override
 	public void show() {
 		
+		//debugRenderer = new PolygonRegionDebugRenderer();
+		
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(this);
 		multiplexer.addProcessor(stage);
 		
-		img = new Texture("picture/Background/game-background-images-2.png");
-		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/font/kenvector_future.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		BitmapFont font = generator.generateFont(parameter);
+		
+		style = new LabelStyle(font, Color.BLACK);
+		tinyLabel = new Label("TINY HOUSE", style);
+		tinyLabel2 = new Label("TINY HOUSE", style);
+		
+		
+		img = new Texture("picture/Background/game-background-images-2.png");
+		
+		//rectangleObject = new RectangleMapObject(char_x, char_y, char_width, char_height);
+		
 
 		
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("ui/Button/Buttonout/backbut.pack"));
 		skin = new Skin(buttonAtlas);
 		table = new Table(skin);
+		table2 = new Table();
 		backTable = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -114,19 +163,29 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
         table.setPosition(-555, 275);
         table.add(backbutton).width(200).height(80);
         
+        table2.add(tinyLabel);
+        table2.row();
+        table2.add(tinyLabel2);
+       table2.setVisible(false);
+        
+        
         stage.addActor(table);
+        stage.addActor(table2);
         
         Gdx.input.setInputProcessor(multiplexer);
         
-        map = new TmxMapLoader().load("Maps/newmap.tmx");
+        map = new TmxMapLoader().load("Maps/gamplayMap.tmx");
 		renderer = new IsometricTiledMapRenderer(map);
 		renderer.setView((OrthographicCamera) stage.getCamera());
 		camera = new OrthographicCamera();
 		camera2 = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth()*4, Gdx.graphics.getHeight()*4);
-		camera2.setToOrtho(false, Gdx.graphics.getWidth()*4, Gdx.graphics.getHeight()*4);
-		
+		camera.setToOrtho(false, Gdx.graphics.getWidth()*2.5f, Gdx.graphics.getHeight()*2.5f);
+		camera2.setToOrtho(false, Gdx.graphics.getWidth()*2.5f, Gdx.graphics.getHeight()*2.5f);
+		sr = new ShapeRenderer();
 		charCre.createChar();
+		
+		
+		
 		
 	}
 
@@ -148,50 +207,73 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		Gdx.gl.glClearColor(10, 10, 100, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		collcheck();
 		
 		if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.A)){
 			timer -= Gdx.graphics.getDeltaTime(); 
-			char_y += 190.0f*delta;
-			char_x -= 190.0f*delta;
+			
+			charCre.rightup[keepState].setBounds(char_x, char_y, char_width, char_height);
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
+			}
+			if(!collcheck()){
+				char_y += 190.0f*delta;
+				char_x -= 190.0f*delta;
+			}
+			else{
+				char_y -= 200.0f*delta;
+				char_x += 200.0f*delta;
 			}
 			
 		}
 		else if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.D)){
 			timer -= Gdx.graphics.getDeltaTime(); 
-			char_y += 190.0f*delta;
-			char_x += 190.0f*delta;
 			
+			charCre.leftup[keepState].setBounds(char_x, char_y, char_width, char_height);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
+			}
+			if(!collcheck()){
+				char_y += 190.0f*delta;
+				char_x += 190.0f*delta;
+			}
+			else{
+				char_y -= 200.0f*delta;
+				char_x -= 200.0f*delta;
 			}
 			
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S) && Gdx.input.isKeyPressed(Keys.A)){
 			timer -= Gdx.graphics.getDeltaTime(); 
-			char_y -= 190.0f*delta;
-			char_x -= 190.0f*delta;
+			
+			charCre.leftdown[keepState].setBounds(char_x, char_y, char_width, char_height);
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
+			}
+			if(!collcheck()){
+				char_y -= 190.0f*delta;
+				char_x -= 190.0f*delta;
+			}
+			else{
+				char_y -= 200.0f*delta;
+				char_x -= 200.0f*delta;
 			}
 			
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S) && Gdx.input.isKeyPressed(Keys.D)){
 			timer -= Gdx.graphics.getDeltaTime(); 
-			char_y -= 190.0f*delta;
-			char_x += 190.0f*delta;
+			charCre.rightdown[keepState].setBounds(char_x, char_y, char_width, char_height);
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
@@ -199,9 +281,17 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
 			}
+			if(!collcheck()){
+				char_y -= 190.0f*delta;
+				char_x += 190.0f*delta;
+			}
+			else{
+				char_y -= 200.0f*delta;
+				char_x -= 200.0f*delta;
+			}
 			
 		}
-		else if(Gdx.input.isKeyPressed(Keys.A)){
+		/*else if(Gdx.input.isKeyPressed(Keys.A)){
 			char_x -= 190.0f*delta; 
 			timer -= Gdx.graphics.getDeltaTime(); 
 			
@@ -249,8 +339,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
 			}
-		}
-		
+		}*/
 		//stateTime+=delta;
 		
 		switch(camState){
@@ -272,46 +361,93 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		game.batch.begin();
 		
 		//game.batch.draw(img, 0, 0);
-		
-		
+		/*sr.setProjectionMatrix(camera.combined);
+		sr.setAutoShapeType(true);
+		sr.begin(ShapeType.Filled);
+		sr.setColor(0, 0 , 0, 0);
+		sr.rect(1830, 875,420, 400);
+		sr.end();*/
+		//if(collcheck()){
+			/*sr.setProjectionMatrix(camera2.combined);
+			sr.setAutoShapeType(true);
+			sr.begin(ShapeType.Filled);
+			sr.rect(691, 913, 1000, 1000);
+			sr.end();*/
+		//}
 		
 		if(first == true){
-			game.batch.draw(charCre.leftdown[0].getKeyFrame(stateTime), char_x, char_y,char_width, char_height);
+			//rectbound.set(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.leftdown[0], char_x, char_y,char_width, char_height);
 		}
-		if(stateLeft == true && stateDown == true){
-			if(char_x < -10){
-				char_x = -10;
-			}
-			game.batch.draw(charCre.leftdown[keepState].getKeyFrame(stateTime), char_x, char_y,char_width, char_height);
+		else if(stateLeft == true && stateDown == true){
+			//rectbound.set(char_x, char_y, char_width, char_height);
+			charCre.leftdown[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.leftdown[keepState], char_x, char_y,char_width, char_height);
+			//System.out.println(charCre.leftdown[keepState].getBoundingRectangle()+ " " + char_x/7 + " " + char_y*4);
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////////
-		if(stateRight == true && stateDown == true){
-			game.batch.draw(charCre.rightdown[keepState].getKeyFrame(stateTime), char_x, char_y,char_width, char_height);
+		else if(stateRight == true && stateDown == true){
+			charCre.rightdown[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.rightdown[keepState], char_x, char_y,char_width, char_height);
+			//System.out.println(charCre.rightdown[keepState].getBoundingRectangle()+ " " + char_x/7 + " " + char_y*4);
 			//System.out.println("ssssss");
 		}
 		
-		if(stateUp == true && stateLeft == true){
-			game.batch.draw(charCre.leftup[keepState].getKeyFrame(stateTime), char_x, char_y,char_width, char_height);
+		else if(stateUp == true && stateLeft == true){
+			
+			charCre.leftup[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.leftup[keepState], char_x, char_y,char_width, char_height);
 		}
 		
-		if(stateUp == true && stateRight == true){
-			if(char_y < -10){
-				char_y = -10;
-			}
-			game.batch.draw(charCre.rightup[keepState].getKeyFrame(stateTime), char_x, char_y,char_width, char_height);
+		else if(stateUp == true && stateRight == true){
+			charCre.rightup[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.rightup[keepState], char_x, char_y,char_width, char_height);
+			//System.out.println(charCre.rightup[keepState].getBoundingRectangle()+ " " + char_x/7 + " " + char_y*4);
 		}
-		
 		
 		game.batch.end();
 		
 		stage.act();
 		stage.draw();
+		
 
 		camera.position.set(posx, posy , 0f);
 		camera.update();
 		
 		
 	}
+	public boolean collcheck(){
+		
+		MapLayer collisionObjectLayer = (MapLayer)map.getLayers().get("Object Layer 1");
+		MapObjects objects = collisionObjectLayer.getObjects();
+		Array<PolygonMapObject> rectangleObjects = objects.getByType(PolygonMapObject.class);
+
+		for (PolygonMapObject rectangleObject : rectangleObjects){
+			Polygon polygon =  rectangleObject.getPolygon();
+			//Rectangle rectangle = rectangleObject.getRectangle();
+			//polygon.setPosition(1523, 118);
+			polygon.setOrigin(1523, 118);
+			polygon.setVertices(vertice);
+			polygon.getBoundingRectangle();
+			
+			
+			System.out.println(polygon.getX() + " " + polygon.getY()+" "+charCre.rightup[keepState].getBoundingRectangle()+ " " + char_x + " " + char_y);
+			/*if (charCre.leftup[keepState].getBoundingRectangle().overlaps(polygon)); {
+				System.out.println("Collide");
+				return true;
+			}	
+			return false;*/
+			if(Intersector.intersectLinePolygon(new Vector2(char_x, char_y), new Vector2(char_x, char_y), polygon)){
+				return true;
+			}
+			return false;
+		}
+		return false;
+		
+	}
+
+	
+	
 
 	@Override
 	public void hide() {
@@ -356,12 +492,11 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S) && Gdx.input.isKeyPressed(Keys.D)){
 			stateClick = false; stateLeft = false; stateRight = true; stateUp = false; stateDown = true; first=false;
-			System.out.println("SD");
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S) && Gdx.input.isKeyPressed(Keys.A)){
 			stateClick = false; stateLeft = true;stateRight = false;stateUp = false;stateDown = true; first=false;
 		}
-		else if(Gdx.input.isKeyPressed(Keys.W)){
+		/*else if(Gdx.input.isKeyPressed(Keys.W)){
 			stateClick = false;stateLeft = false;stateRight = false;stateUp = true;stateDown = false; first=false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S)){
@@ -372,7 +507,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D)){
 				stateClick = false;stateLeft = false;stateRight = true;stateUp = false;stateDown = false; first=false;
-		}
+		}*/
 		return true;
 	}
 
@@ -384,6 +519,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		System.out.println(screenX + " " + screenY);
 		return false;}
 
 	@Override
@@ -397,7 +533,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		System.out.println(screenX + " " + screenY);
+		//System.out.println(screenX + " " + screenY);
 		
 		if(screenX < 1260 && screenX > 15 && screenY > 15)
 			camState = 0;
@@ -413,6 +549,22 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		
 		if(screenY > 705)
 			camState = 4;
+		
+		if(screenX> 259 && screenX < 417 && screenY > 163 && screenY < 438){
+			/*table2.setPosition(screenX, 400);
+			table2.setVisible(true);*/
+			/*table2.addListener(new EventListener() {
+				
+				@Override
+				public boolean handle(Event event) {
+					if(event.toString() == "touchDown"){
+						System.out.println("SS");
+					}
+					
+					return false;
+				}
+			});*/
+		}
 		
 		//System.out.println(camState);
 		return false;
