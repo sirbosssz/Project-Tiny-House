@@ -234,35 +234,23 @@ public class createChar extends AbstractScreen{
 			stateKeep = 0;
 			stateCheck = 0;
 			select.up = selDelSkin.getDrawable("all purpose accept button");*/
-<<<<<<< Updated upstream
 			game.gsm.setScreen(STATE.PLAY);
-		}
-		
-		if(backbutton.isPressed() && Save.game.getCreateState() == 0){
-=======
+			Save.gamed.setCreateState(1);
 			Save.save();
-			game.gsm.setScreen(STATE.PLAY);
 		}
 		
 		if(backbutton.isPressed() && Save.gamed.getCreateState() == 0){
->>>>>>> Stashed changes
-			
 			backTable.setVisible(false);
 			char_ta.setVisible(true);
 			createState = 1;
-<<<<<<< Updated upstream
-			Save.game.setCreateState(1);
-			
-		}
-		else if (Save.game.getCreateState() == 1){
-=======
 			Save.gamed.setCreateState(1);
 			
 		}
+		
 		else if (Save.gamed.getCreateState() == 1){
->>>>>>> Stashed changes
 			backTable.setVisible(false);
 			char_ta.setVisible(true);
+			Save.gamed.setCreateState(1);
 		}
 		
 		sel_But.addListener(new ClickListener(){
@@ -306,17 +294,13 @@ public class createChar extends AbstractScreen{
 				stateKeep= 0;
 				createState = 0;
 				menuState = 0;
-<<<<<<< Updated upstream
-				Save.game.setCreateState(0);
-=======
 				Save.gamed.setCreateState(0);
->>>>>>> Stashed changes
 				
 			}
 		}
 		if(back_But.isPressed()){
 			stateKeep= 0;
-			createState = 0;
+			createState = Save.gamed.getCreateState();
 			menuState = 0;
 			cre_char_Back_Ta.setVisible(true);
 			cre_char_Back_Ta_Act.setVisible(false);

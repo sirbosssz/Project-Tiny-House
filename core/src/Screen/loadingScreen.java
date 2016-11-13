@@ -4,11 +4,8 @@ import javax.swing.Action;
 
 import com.badlogic.gdx.Gdx;
 import Manager.AssetMan;
-import Manager.GameScreenManager.STATE;
-<<<<<<< Updated upstream
-=======
 import Manager.Save;
->>>>>>> Stashed changes
+import Manager.GameScreenManager.STATE;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
