@@ -52,9 +52,10 @@ import Character.InitAll;
 import InputHandler.inputHandle;
 import Manager.GameScreenManager.STATE;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import Manager.Save;
 
 public class MainGameScreen extends AbstractScreen implements Screen, ApplicationListener, InputProcessor{
+	
+	
 	private TiledMap map;
 	private IsometricTiledMapRenderer renderer;
 	private OrthographicCamera camera, camera2;
@@ -73,7 +74,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	private LabelStyle style;
 	
 	public static float posx = 2800, posy = 500;//5000 2000
-	public float char_x= 2500, char_y = 200;//2500 200
+	public static float char_x= 2500, char_y = 200;//2500 200
 	
 	public static final int char_width = 500;
 	public static final int char_height = 500;
@@ -82,7 +83,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	int keepState, checkState = 0, camState= 0;
 	float stateTime, timer;
 	
-	boolean stateLeft, stateRight, stateDown, stateUp, stateClick, first = true;
+	boolean stateLeft, stateRight, stateDown, stateUp, stateClick, first = true, stateinter_r;
 	
 	SpriteBatch batch;
 	Texture img;
@@ -165,7 +166,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
         table2.add(tinyLabel);
         table2.row();
         table2.add(tinyLabel2);
-        table2.setVisible(false);
+       table2.setVisible(false);
         
         
         stage.addActor(table);
@@ -192,14 +193,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	public void render(float delta) {
 		System.gc();
 		
-		Save.load();
-		char_x = Save.gamed.getPositionX();
-		char_y =  Save.gamed.getPositionY();
-		
 		if(backbutton.isPressed()){
 			game.gsm.setScreen(STATE.MAIN_MENU);
-			Save.gamed.setPosition(char_x, char_y);
-			Save.save();
 			
 		}
 		
@@ -346,6 +341,16 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 				timer = 0.0f;
 				if(keepState >= 17){keepState = 0;}
 			}
+		}else if(Gdx.input.isKeyPressed(Keys.B)){
+			
+		    timer -= Gdx.graphics.getDeltaTime();
+			//System.out.println(timer);
+			if(Math.abs(timer) > switch_time){
+				keepState += 1;
+				System.out.println(keepState);
+				timer = 0.0f;
+				if(keepState >= 14){keepState = 0;}
+			}
 		}
 		//stateTime+=delta;
 		
@@ -386,6 +391,10 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			//rectbound.set(char_x, char_y, char_width, char_height);
 			game.batch.draw(charCre.left[0], char_x, char_y,char_width, char_height);
 		}
+		else if(stateinter_r == true){
+			game.batch.draw(charCre.inter_left[keepState], char_x, char_y, char_width, char_height);
+			
+		}
 		else if (stateUp == true) {
 
 			//charCre.up[keepState].setBounds(char_x, char_y, char_width, char_height);
@@ -410,6 +419,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			// System.out.println(charCre.rightup[keepState].getBoundingRectangle()+
 			// " " + char_x/7 + " " + char_y*4);
 		}
+		
 		/*else if(stateLeft == true && stateDown == true){
 			//rectbound.set(char_x, char_y, char_width, char_height);
 			charCre.leftdown[keepState].setBounds(char_x, char_y, char_width, char_height);
@@ -531,17 +541,20 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			stateClick = false; stateLeft = true;stateRight = false;stateUp = false;stateDown = true; first=false;
 		}*/
 		if(Gdx.input.isKeyPressed(Keys.W)){
-			stateClick = false;stateLeft = false;stateRight = false;stateUp = true;stateDown = false; first=false;
+			stateLeft = false;stateRight = false;stateUp = true;stateDown = false; first=false;stateinter_r = false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S)){
-				stateClick = false;stateLeft = false;stateRight = false;stateUp = false;stateDown = true; first=false;
+			stateLeft = false;stateRight = false;stateUp = false;stateDown = true; first=false;stateinter_r = false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.A)){
-			stateClick = false;stateLeft = true;stateRight = false;stateUp = false;stateDown = false; first=false;
+			stateLeft = true;stateRight = false;stateUp = false;stateDown = false; first=false;stateinter_r = false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D)){
-				stateClick = false;stateLeft = false;stateRight = true;stateUp = false;stateDown = false; first=false;
+			stateLeft = false;stateRight = true;stateUp = false;stateDown = false; first=false;stateinter_r = false;
 		}
+		else if(Gdx.input.isKeyPressed(Keys.B)){
+			stateLeft = false;stateRight = true;stateUp = false;stateDown = false; first=false;stateinter_r = true;
+	}
 		return true;
 	}
 
