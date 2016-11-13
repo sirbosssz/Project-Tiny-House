@@ -1,0 +1,19 @@
+
+pre_ui.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_ac
+  rotate: false
+  xy: 1, 1
+  size: 171, 171
+  orig: 171, 171
+  offset: 0, 0
+  index: -1
+button_inac
+  rotate: false
+  xy: 174, 1
+  size: 171, 171
+  orig: 171, 171
+  offset: 0, 0
+  index: -1
