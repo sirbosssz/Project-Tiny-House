@@ -1,8 +1,11 @@
 package Screen;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 
+=======
+>>>>>>> master
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
@@ -30,7 +33,10 @@ import com.mygdx.game.PetGame;
 
 import Manager.AssetMan;
 import Manager.GameScreenManager.STATE;
+<<<<<<< HEAD
 import Manager.Save;
+=======
+>>>>>>> master
 
 public class createChar extends AbstractScreen{
 
@@ -195,7 +201,13 @@ public class createChar extends AbstractScreen{
         
         stage.getCamera();
         stage2.getCamera();
+<<<<<<< HEAD
 
+=======
+        
+		
+		
+>>>>>>> master
 	}
 	@Override
 	public void render(float delta){
@@ -235,6 +247,7 @@ public class createChar extends AbstractScreen{
 			stateCheck = 0;
 			select.up = selDelSkin.getDrawable("all purpose accept button");*/
 			game.gsm.setScreen(STATE.PLAY);
+<<<<<<< HEAD
 			Save.gamed.setCreateState(1);
 			Save.save();
 		}
@@ -253,6 +266,18 @@ public class createChar extends AbstractScreen{
 			Save.gamed.setCreateState(1);
 		}
 		
+=======
+		}
+		
+		if(backbutton.isPressed()){
+			
+			backTable.setVisible(false);
+			char_ta.setVisible(true);
+			createState = 1;
+			
+		}
+		
+>>>>>>> master
 		sel_But.addListener(new ClickListener(){
 			@Override
 			public void clicked (InputEvent event, float x, float y) {
@@ -294,19 +319,30 @@ public class createChar extends AbstractScreen{
 				stateKeep= 0;
 				createState = 0;
 				menuState = 0;
+<<<<<<< HEAD
 				Save.gamed.setCreateState(0);
+=======
+>>>>>>> master
 				
 			}
 		}
 		if(back_But.isPressed()){
 			stateKeep= 0;
+<<<<<<< HEAD
 			createState = Save.gamed.getCreateState();
+=======
+			createState = 0;
+>>>>>>> master
 			menuState = 0;
 			cre_char_Back_Ta.setVisible(true);
 			cre_char_Back_Ta_Act.setVisible(false);
 			game.gsm.setScreen(STATE.MAIN_MENU);
 		}
+<<<<<<< HEAD
 		System.out.println(stateCheck + " " + menuState + " " + createState);
+=======
+		//System.out.println(stateCheck + " " + menuState + " " + createState);
+>>>>>>> master
 		
 	}
 
