@@ -295,7 +295,7 @@ public class NewMainMenuScreen extends AbstractScreen{
 			stage5.clear();
 			//createChar.backTable.setVisible(false);
 			Save.load();
-			createChar.createState = Save.game.getCreateState();
+			createChar.createState = Save.gamed.getCreateState();
 			createChar.stateKeep = 0;
 			createChar.stateCheck = 0;
 			game.gsm.setScreen(STATE.CHARCREATE);
@@ -307,6 +307,9 @@ public class NewMainMenuScreen extends AbstractScreen{
 			pressState = 1;
 		}
 		
+		if(Startgame.isPressed()){
+			Startgame.setPosition(Startgame.getOriginX()+10, Startgame.getOriginY()+10);
+		}
 }
 	
 	@Override

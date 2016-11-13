@@ -10,14 +10,14 @@ import com.badlogic.gdx.Gdx;
 
 public class Save {
 	
-	public static GameData game;
+	public static GameData gamed;
 	
 	public static void save(){
 		try{
 			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream("game.sav")
+					new FileOutputStream("gamechar.sav")
 				);
-			out.writeObject(game);
+			out.writeObject(gamed);
 			out.close();
 		}
 		catch(Exception e){
@@ -29,13 +29,12 @@ public class Save {
 	public static void load(){
 		try{
 			if(!saveFileExists()){
-				init();
 				return;
 			}
 			ObjectInputStream in = new ObjectInputStream(
-					new FileInputStream("game.sav")
+					new FileInputStream("gamechar.sav")
 				);
-			game = (GameData) in.readObject();
+			gamed = (GameData) in.readObject();
 			in.close();
 		}
 		catch(Exception e){
@@ -45,13 +44,8 @@ public class Save {
 	}
 	
 	public static boolean saveFileExists(){
-		File file = new File("game.sav");
+		File file = new File("gamechar.sav");
 		return file.exists();
 	}
 	
-	public static void init(){
-		game = new GameData();
-		game.init();
-		save();
-	}
 }
