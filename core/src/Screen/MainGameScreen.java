@@ -76,8 +76,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	public static float posx = 2800, posy = 500;//5000 2000
 	public static float char_x= 2500, char_y = 200;//2500 200
 	
-	public static final int char_width = 700;
-	public static final int char_height = 700;
+	public static final int char_width = 500;
+	public static final int char_height = 500;
 	public static final float switch_time = 0.02f;
 	
 	int keepState, checkState = 0, camState= 0;
@@ -194,12 +194,6 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		System.gc();
 		
 		if(backbutton.isPressed()){
-			/*createChar.menuState = 1;
-			createChar.createState = 1;
-			createChar.char_ta.setVisible(true);
-			createChar.cre_char_Back_Ta.setVisible(false);
-			createChar.cre_char_Back_Ta_Act.setVisible(true);
-			createChar.backTable.setVisible(false);*/
 			game.gsm.setScreen(STATE.MAIN_MENU);
 			
 		}
@@ -209,11 +203,13 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		
 		collcheck();
 		
-		if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.A)){
+		/*if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.A)){
 			timer -= Gdx.graphics.getDeltaTime(); 
 			
 			charCre.rightup[keepState].setBounds(char_x, char_y, char_width, char_height);
 			//System.out.println(timer);
+			char_y += 190.0f*delta;
+			char_x -= 190.0f*delta;
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
@@ -237,6 +233,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
+				char_y += 190.0f*delta;
+				char_x += 190.0f*delta;
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
 			}
@@ -257,6 +255,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
+				char_y -= 190.0f*delta;
+				char_x -= 190.0f*delta;
 				//System.out.println(keepState);
 				timer = 0.0f;
 				if(keepState >= 15 ){keepState = 0;}
@@ -275,6 +275,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			timer -= Gdx.graphics.getDeltaTime(); 
 			charCre.rightdown[keepState].setBounds(char_x, char_y, char_width, char_height);
 			//System.out.println(timer);
+			char_y -= 190.0f*delta;
+			char_x += 190.0f*delta;
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
 				//System.out.println(keepState);
@@ -290,16 +292,16 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 				char_x -= 200.0f*delta;
 			}
 			
-		}
-		/*else if(Gdx.input.isKeyPressed(Keys.A)){
+		}*/
+		if(Gdx.input.isKeyPressed(Keys.A)){
 			char_x -= 190.0f*delta; 
 			timer -= Gdx.graphics.getDeltaTime(); 
 			
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
-				//System.out.println(keepState);
+				System.out.println(keepState);
 				timer = 0.0f;
-				if(keepState >= 15 ){keepState = 0;}
+				if(keepState >= 17 ){keepState = 0;}
 			}
 		}
 		////////////////////////////////////////////////////////////////////////////////////
@@ -309,9 +311,9 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
-				//System.out.println(keepState);
+				System.out.println(keepState);
 				timer = 0.0f;
-				if(keepState >= 15 ){keepState = 0;}
+				if(keepState >= 17 ){keepState = 0;}
 			}
 		}
 		////////////////////////////////////////////////////////////////////////////////
@@ -321,9 +323,9 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
-				//System.out.println(keepState);
+				System.out.println(keepState);
 				timer = 0.0f;
-				if(keepState >= 15 ){keepState = 0;}
+				if(keepState >= 17 ){keepState = 0;}
 			}
 			
 		}
@@ -335,14 +337,14 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			//System.out.println(timer);
 			if(Math.abs(timer) > switch_time){
 				keepState += 1;
-				//System.out.println(keepState);
+				System.out.println(keepState);
 				timer = 0.0f;
-				if(keepState >= 15 ){keepState = 0;}
+				if(keepState >= 17){keepState = 0;}
 			}
-		}*/
+		}
 		//stateTime+=delta;
 		
-		switch(camState){
+		/*switch(camState){
 		case 1 : posx -= 1150*delta;
 				break;
 		case 2 : posx += 1150*delta;
@@ -351,7 +353,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 				break;
 		case 4 : posy -= 1150*delta;
 				break;
-		}
+		}*/
 		
 		renderer.render();
 		renderer.setView(camera);
@@ -377,9 +379,33 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		
 		if(first == true){
 			//rectbound.set(char_x, char_y, char_width, char_height);
-			game.batch.draw(charCre.leftdown[0], char_x, char_y,char_width, char_height);
+			game.batch.draw(charCre.left[0], char_x, char_y,char_width, char_height);
 		}
-		else if(stateLeft == true && stateDown == true){
+		else if (stateUp == true) {
+
+			//charCre.up[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.up[keepState], char_x, char_y, char_width, char_height);
+		}
+
+		else if (stateDown == true) {
+			//charCre.down[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.down[keepState], char_x, char_y, char_width, char_height);
+			// System.out.println(charCre.rightup[keepState].getBoundingRectangle()+
+			// " " + char_x/7 + " " + char_y*4);
+		}
+		else if (stateLeft == true) {
+
+			//charCre.left[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.left[keepState], char_x, char_y, char_width, char_height);
+		}
+
+		else if (stateRight == true) {
+			//charCre.right[keepState].setBounds(char_x, char_y, char_width, char_height);
+			game.batch.draw(charCre.right[keepState], char_x, char_y, char_width, char_height);
+			// System.out.println(charCre.rightup[keepState].getBoundingRectangle()+
+			// " " + char_x/7 + " " + char_y*4);
+		}
+		/*else if(stateLeft == true && stateDown == true){
 			//rectbound.set(char_x, char_y, char_width, char_height);
 			charCre.leftdown[keepState].setBounds(char_x, char_y, char_width, char_height);
 			game.batch.draw(charCre.leftdown[keepState], char_x, char_y,char_width, char_height);
@@ -403,7 +429,10 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 			charCre.rightup[keepState].setBounds(char_x, char_y, char_width, char_height);
 			game.batch.draw(charCre.rightup[keepState], char_x, char_y,char_width, char_height);
 			//System.out.println(charCre.rightup[keepState].getBoundingRectangle()+ " " + char_x/7 + " " + char_y*4);
-		}
+		}*/
+		
+		
+		
 		
 		game.batch.end();
 		
@@ -484,7 +513,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 	@Override
 	public boolean keyDown(int keycode) {
 		
-		if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.A)){
+		/*if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.A)){
 			stateClick = false; stateLeft = true; stateRight = false; stateUp = true; stateDown = false; first=false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.W) && Gdx.input.isKeyPressed(Keys.D)){
@@ -495,8 +524,8 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S) && Gdx.input.isKeyPressed(Keys.A)){
 			stateClick = false; stateLeft = true;stateRight = false;stateUp = false;stateDown = true; first=false;
-		}
-		/*else if(Gdx.input.isKeyPressed(Keys.W)){
+		}*/
+		if(Gdx.input.isKeyPressed(Keys.W)){
 			stateClick = false;stateLeft = false;stateRight = false;stateUp = true;stateDown = false; first=false;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.S)){
@@ -507,7 +536,7 @@ public class MainGameScreen extends AbstractScreen implements Screen, Applicatio
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D)){
 				stateClick = false;stateLeft = false;stateRight = true;stateUp = false;stateDown = false; first=false;
-		}*/
+		}
 		return true;
 	}
 
